@@ -18,6 +18,7 @@
 		264651F31D74FA3200148567 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264651F21D74FA3200148567 /* Contact.swift */; };
 		264651F51D754B2000148567 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 264651F41D754B2000148567 /* data.json */; };
 		264651F91D75589300148567 /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264651F81D75589300148567 /* ContactTableViewCell.swift */; };
+		26B2A7911D89980100F08E86 /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B2A7901D89980100F08E86 /* NavigationViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		264651F21D74FA3200148567 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		264651F41D754B2000148567 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		264651F81D75589300148567 /* ContactTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
+		26B2A7901D89980100F08E86 /* NavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 			children = (
 				264651DB1D74DA8C00148567 /* MasterViewController.swift */,
 				264651DD1D74DA8C00148567 /* DetailViewController.swift */,
+				26B2A7901D89980100F08E86 /* NavigationViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -181,6 +184,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26B2A7911D89980100F08E86 /* NavigationViewController.swift in Sources */,
 				264651F31D74FA3200148567 /* Contact.swift in Sources */,
 				264651F91D75589300148567 /* ContactTableViewCell.swift in Sources */,
 				264651DE1D74DA8C00148567 /* DetailViewController.swift in Sources */,
