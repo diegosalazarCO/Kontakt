@@ -33,7 +33,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" distribution="fillProportionally" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="ukS-Qd-HhI">
-                                <rect key="frame" x="10" y="79" width="575" height="430"/>
+                                <rect key="frame" x="13" y="79" width="575" height="430"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleAspectFit" verticalHuggingPriority="249" verticalCompressionResistancePriority="751" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="zZt-AA-FMd">
                                         <rect key="frame" x="0.0" y="0.0" width="575" height="128"/>
@@ -270,12 +270,15 @@
                         <barButtonItem key="backBarButtonItem" title="All" id="1ue-go-hDf"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="cityAddressLabel" destination="Gy8-zQ-WNX" id="ibM-CE-vu6"/>
                         <outlet property="companyLabel" destination="2BZ-Ih-gUn" id="1jW-P0-E2y"/>
+                        <outlet property="emailLabel" destination="9uG-Gb-mAA" id="lCf-Pn-qhL"/>
                         <outlet property="homePhoneLabel" destination="3dq-eQ-2LB" id="qTf-RZ-8wt"/>
                         <outlet property="locationView" destination="jwV-cb-B1e" id="HkA-Nh-CXZ"/>
                         <outlet property="mobilePhoneLabel" destination="4i5-jP-6KB" id="xGo-ld-IsI"/>
                         <outlet property="nameLabel" destination="tPs-Ol-x39" id="GKa-oT-HR7"/>
                         <outlet property="photo" destination="w0o-Zq-FqV" id="dJt-YT-YhG"/>
+                        <outlet property="streetAddressLabel" destination="9id-No-kfc" id="4Rj-7a-mo1"/>
                         <outlet property="workPhoneLabel" destination="czk-3T-jAr" id="PPC-f5-iJw"/>
                     </connections>
                 </viewController>

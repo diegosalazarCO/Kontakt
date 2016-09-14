@@ -19,8 +19,11 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var photo: UIImageView!
     @IBOutlet weak var locationView: MKMapView!
+    @IBOutlet weak var streetAddressLabel: UILabel!
+    @IBOutlet weak var cityAddressLabel: UILabel!
+    @IBOutlet weak var emailLabel: UILabel!
     
-    
+    var isFavorite: Bool = false
     var detailItem: Contact? {
         didSet {
             // Update the view.
@@ -35,8 +38,10 @@ class DetailViewController: UIViewController {
             workPhoneLabel?.text = contact.phone
             homePhoneLabel?.text = contact.homePhone
             mobilePhoneLabel?.text = contact.mobilePhone
-            //photo.image = contact.photo ?? UIImage(named: "image2_large.jpeg")
+            //photo.image = contact.photo
             companyLabel?.text = contact.company
+            isFavorite = contact.isFavorite
+            //emailLabel.text = contact.email
             
         }
         
@@ -49,6 +54,7 @@ class DetailViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         self.configureView()
         centreMap(locationView, atPosition: CLLocationCoordinate2D(latitude: 34.060897, longitude: 117.932632))
+        //self.view.reload
     }
 
     override func didReceiveMemoryWarning() {

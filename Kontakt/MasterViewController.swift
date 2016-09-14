@@ -13,7 +13,6 @@ class MasterViewController: UITableViewController {
     var detailViewController: DetailViewController? = nil
     var contacts = [Contact]() {
         didSet {
-            print("The value of myProperty changed from \(oldValue) to \(contacts.count)")
             self.tableView.reloadData()
         }
     }
@@ -29,9 +28,10 @@ class MasterViewController: UITableViewController {
             let controllers = split.viewControllers
             self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
-        if let seedContacts = Contact.getContacts() {
-            contacts += seedContacts
-            contacts = contacts.sort { $0.name < $1.name }
+        Contact.getContacts {
+            contacts in
+            self.contacts += contacts
+            self.contacts = self.contacts.sort { $0.name < $1.name }
         }
         tableView.estimatedRowHeight = 80
         refresh()
