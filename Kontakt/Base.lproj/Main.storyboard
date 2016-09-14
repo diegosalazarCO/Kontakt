@@ -580,6 +580,7 @@
                         <barButtonItem key="backBarButtonItem" title="All" id="1ue-go-hDf"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="birthdayLabel" destination="yCL-KY-see" id="Tp0-gn-MeC"/>
                         <outlet property="cityAddressLabel" destination="Gy8-zQ-WNX" id="ibM-CE-vu6"/>
                         <outlet property="companyLabel" destination="2BZ-Ih-gUn" id="1jW-P0-E2y"/>
                         <outlet property="emailLabel" destination="9uG-Gb-mAA" id="lCf-Pn-qhL"/>
@@ -626,13 +627,13 @@
                                     <rect key="frame" x="0.0" y="0.0" width="567" height="79.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="KcY-f9-Uqb">
+                                        <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="KcY-f9-Uqb">
                                             <rect key="frame" x="15" y="10" width="542" height="60"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image2_small.jpeg" translatesAutoresizingMaskIntoConstraints="NO" id="Aen-BH-lRa">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Aen-BH-lRa">
                                                     <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                                 </imageView>
-                                                <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" axis="vertical" distribution="fillProportionally" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="yEA-GQ-pvX">
+                                                <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" misplaced="YES" axis="vertical" distribution="fillProportionally" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="yEA-GQ-pvX">
                                                     <rect key="frame" x="65" y="0.0" width="477" height="40"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Cruz Roudabush" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aet-Rv-oLt">
@@ -730,7 +731,6 @@
     </scenes>
     <resources>
         <image name="image2_large.jpeg" width="150" height="150"/>
-        <image name="image2_small.jpeg" width="60" height="60"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="6S0-TO-JiA"/>

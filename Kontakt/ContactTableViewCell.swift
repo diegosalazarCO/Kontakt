@@ -19,7 +19,18 @@ class ContactTableViewCell: UITableViewCell {
             if let contact = contact {
                 nameLabel?.text = contact.name
                 mainPhoneLabel?.text = contact.phone
-                photoThumb.image = contact.photo
+                if let profileImageURL = contact.photo {
+                    dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0)) {
+                        let imageData = NSData(contentsOfURL: profileImageURL)
+                        dispatch_async(dispatch_get_main_queue()) {
+                            if profileImageURL == contact.photo {
+                                if imageData != nil {
+                                    self.photoThumb?.image = UIImage(data: imageData!)
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }

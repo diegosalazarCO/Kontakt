@@ -9,17 +9,15 @@
 import UIKit
 import CoreLocation
 
-let url = NSBundle.mainBundle().URLForResource("data", withExtension: "json")
-let data = NSData(contentsOfURL: url!)
-
 struct Contact {
     let name: String
-    var photo: UIImage?
+    var photo: NSURL?
     let phone: String
     let homePhone: String
     let mobilePhone: String?
     let company: String
     var email: String
+    var birthday: String
     let location: CLLocationCoordinate2D
     //let detailsURL: NSURL
     var isFavorite: Bool = false
@@ -32,12 +30,13 @@ extension Contact {
         guard let name = dict["name"] as? String,
             let phone = dict["phone"]!["work"] as? String,
             let homePhone = dict["phone"]!["home"] as? String?,
-            //let mobilePhone = dict["phone"]?["mobile"] as? String?,
+            let mobilePhone = dict["phone"]?["mobile"] as? String?,
             let company = dict["company"] as? String,
+            let birthdayDate = dict["birthdate"] as? String,
             let contactURL = dict["detailsURL"] as? String else {
                 return nil
         }
-        
+
         let session = NSURLSession.sharedSession()
         let url = NSURL(string: contactURL)!
         
@@ -52,7 +51,7 @@ extension Contact {
                 
                 // Parse JSON and create contacts with the data
                 do {
-                    var contact = [String: AnyObject]?()
+                    //var contact = [String: AnyObject]?()
                     let object = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
                     if let dictionary = object as? [String: AnyObject] {
 //                        guard let isFavorite = dictionary["favorite"] else {
@@ -67,12 +66,20 @@ extension Contact {
             }).resume()
         }
         
+        let date: NSDate
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd MMM, yyy"
+        let birth = Double(birthdayDate)
+        date = NSDate(timeIntervalSince1970: birth!)
+        print(date)
+        self.birthday = dateFormatter.stringFromDate(date)
         
         self.name = name
         self.phone = phone
         self.homePhone = homePhone!
-        self.mobilePhone = "345353"
+        self.mobilePhone = mobilePhone ?? ""
         self.company = company
+        self.photo = NSURL(string: (dict["smallImageURL"] as? String)!)
         // TODO: Change hardcoded value
         self.location = CLLocationCoordinate2D(latitude: 34.060897, longitude: -117.932632)
         
@@ -92,34 +99,7 @@ extension Contact {
         
         //self.email = (contactDetails["email"] as? String)!
         self.email = ""
-        // Downloading Photos
         
-        let photoURL = NSURL(string: (dict["smallImageURL"] as? String)!)
-        
-        func getDataFromUrl(url:NSURL, completion: ((data: NSData?, response: NSURLResponse?, error: NSError? ) -> Void)) {
-            NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
-                completion(data: data, response: response, error: error)
-                }.resume()
-        }
-        
-        func downloadImage(url: NSURL, completionHandler: (photo: UIImage) -> ()){
-            print("Download Started")
-            print("lastPathComponent: " + (url.lastPathComponent ?? ""))
-            getDataFromUrl(url) { (data, response, error)  in
-                dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                    guard let data = data where error == nil else { return }
-                    print(response?.suggestedFilename ?? "")
-                    print("Download Finished")
-                    completionHandler(photo: UIImage(data: data)!)
-                }
-            }
-        }
-        
-        downloadImage(photoURL!, completionHandler: {
-            photo in
-            print(photo)
-            self.photo = photo
-        })
     }
 }
 
@@ -142,12 +122,16 @@ extension Contact {
                 var contacts = [Contact]?()
                 let object = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
                 if let dictionary = object as? [[String: AnyObject]] {
-                    //dispatch_async(dispatch_get_main_queue(), {
+                    dispatch_async(dispatch_get_main_queue(), {
                         contacts = dictionary.map { Contact(dict: $0)! }
                             .filter { $0 != nil }
                             .map { $0 }
                         completionHandler(contacts: contacts!)
-                    //}) 
+                    // foreach contact in dictionary {
+                    // Contact(dict: contact[0]) {
+                    //      (detail) in contacts.append(detail)
+                    //  }
+                    })
                 }
             } catch let error as NSError {
                 print("Failed to load: \(error.localizedDescription)")

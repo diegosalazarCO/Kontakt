@@ -22,6 +22,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var streetAddressLabel: UILabel!
     @IBOutlet weak var cityAddressLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var birthdayLabel: UILabel!
     
     var isFavorite: Bool = false
     var detailItem: Contact? {
@@ -42,6 +43,7 @@ class DetailViewController: UIViewController {
             companyLabel?.text = contact.company
             isFavorite = contact.isFavorite
             //emailLabel.text = contact.email
+            birthdayLabel?.text = contact.birthday
             
         }
         
