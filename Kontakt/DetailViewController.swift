@@ -48,8 +48,9 @@ class DetailViewController: UIViewController {
                 }
             }
         
-        let favoriteButton = UIBarButtonItem(barButtonSystemItem: .Bookmarks, target: self, action: #selector(insertNewObject(_:)))
+        let favoriteButton = UIBarButtonItem(barButtonSystemItem: .Bookmarks, target: self, action: #selector(changeFavoriteState(_:)))
         self.navigationItem.rightBarButtonItem = favoriteButton
+        favoriteButton.tintColor = UIColor.grayColor()
     }
     
     private func getContactDetails(contactURL: String) -> Void {
@@ -80,6 +81,10 @@ class DetailViewController: UIViewController {
                             if imageData != nil {
                                 self.photo.image = UIImage(data: imageData!)
                             }
+                            self.isFavorite = (dictionary["favorite"] as? Bool)!
+                            if self.isFavorite {
+                                self.navigationItem.rightBarButtonItem?.tintColor = UIColor.whiteColor()
+                            }
                         })
                     }
                 } catch let error as NSError {
@@ -97,8 +102,14 @@ class DetailViewController: UIViewController {
         self.configureView()
     }
     
-    func insertNewObject(sender: AnyObject) {
-        // TODO: If we want to insert new objects
+    func changeFavoriteState(sender: AnyObject) {
+        if self.isFavorite {
+            self.isFavorite = false
+            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.grayColor()
+        } else {
+            self.isFavorite = true
+            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.whiteColor()
+        }
     }
 
     private func centreMap(map: MKMapView?, atPosition position: CLLocationCoordinate2D?) {
