@@ -27,7 +27,6 @@ class DetailViewController: UIViewController {
     var isFavorite: Bool = false
     var detailItem: Contact? {
         didSet {
-            // Update the view.
             self.configureView()
         }
     }
@@ -39,31 +38,64 @@ class DetailViewController: UIViewController {
             workPhoneLabel?.text = contact.phone
             homePhoneLabel?.text = contact.homePhone
             mobilePhoneLabel?.text = contact.mobilePhone
-            //photo.image = contact.photo
             companyLabel?.text = contact.company
             isFavorite = contact.isFavorite
-            //emailLabel.text = contact.email
             birthdayLabel?.text = contact.birthday
             
-        }
+            // Make request and download details from contacts
+            if let url = contact.detailsURL {
+                    self.getContactDetails(url)
+                }
+            }
         
         let favoriteButton = UIBarButtonItem(barButtonSystemItem: .Bookmarks, target: self, action: #selector(insertNewObject(_:)))
         self.navigationItem.rightBarButtonItem = favoriteButton
     }
+    
+    private func getContactDetails(contactURL: String) -> Void {
+        let session = NSURLSession.sharedSession()
+        let url = NSURL(string: contactURL)!
+        
+        func getContactDetails(){
+            session.dataTaskWithURL(url, completionHandler: { ( data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+                guard let realResponse = response as? NSHTTPURLResponse where
+                    realResponse.statusCode == 200 else {
+                        print("Not a 200 response")
+                        return
+                }
+                
+                // Parse JSON and update UI with new data
+                do {
+                    let object = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
+                    if let dictionary = object as? [String: AnyObject] {
+                        let imageURL = NSURL(string: (dictionary["largeImageURL"] as? String)!)
+                        let imageData = NSData(contentsOfURL: imageURL!)
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.emailLabel.text = dictionary["email"] as? String
+                            self.streetAddressLabel.text = dictionary["address"]!["street"] as? String
+                            self.cityAddressLabel.text = dictionary["address"]!["city"] as? String
+                            let latitude = dictionary["address"]!["latitude"] as? Double
+                            let longitude = dictionary["address"]!["longitude"] as? Double
+                            self.centreMap(self.locationView, atPosition: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!))
+                            if imageData != nil {
+                                self.photo.image = UIImage(data: imageData!)
+                            }
+                        })
+                    }
+                } catch let error as NSError {
+                    print("Failed to load: \(error.localizedDescription)")
+                }
+                
+            }).resume()
+        }
+        getContactDetails()
+        
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         self.configureView()
-        centreMap(locationView, atPosition: CLLocationCoordinate2D(latitude: 34.060897, longitude: 117.932632))
-        //self.view.reload
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     
     func insertNewObject(sender: AnyObject) {
         // TODO: If we want to insert new objects
